@@ -1,79 +1,48 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
-import { cookies } from "next/headers";
+
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import Swal from "sweetalert2";
-import DeleteButton from "./DeleteButton";
-import { deleteNews } from "./actions";
+import React from "react";
+import { cookies } from "next/headers";
 
-interface NewsItem {
-  id: string;
-  title: string;
-  type: string;
-  content: string;
-  image: string;
-  slug: string;
-  created_by: string;
-  created_at: string;
-  updated_at: string;
+
+interface News {
+  params: {
+    slug: string;
+  };
 }
 
-interface NewsResponse {
-  first_page_url: string;
-  last_page_url: string;
-  current_page: number;
-  data: NewsItem[];
-  last_page: number;
-}
+function AddNewsPage({ params }: News) {
+  const getNewsById = async () => {
+    const cookieStore = cookies();
+    const token = (await cookieStore).get("accessToken")?.value ?? "";
+    try {
+     const res =  await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL}/api/cms/detailNews/${params.slug}`,
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: token,
+          },
+          cache: "no-store", // biar selalu fresh (SSR)
+        },
 
-const cookieStore = cookies();
-const token = (await cookieStore).get("accessToken")?.value ?? "";
-async function getNews(page: number = 1): Promise<NewsResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL}/api/cms/listNews?page=${page}`,
-    {
-      headers: {
-        accept: "application/json",
-        Authorization: token,
-      },
-      cache: "no-store", // biar selalu fresh (SSR)
-    },
-  );
+        
+      );
+      const news = await res.json()
+      console.log(news)
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
-  const data = await res.json();
-
-  return data;
-}
-
-export default async function NewsPage({
-  searchParams,
-}: {
-  searchParams?: Promise<{ page?: string }>;
-}) {
-  const params = await searchParams;
-  const page = Number(params?.page ?? 1);
-  if (!params?.page) {
-    redirect(`/dashboard/cms/news?page=${page}`);
-  }
-  const news = await getNews(page);
-
+  getNewsById()
   return (
     <>
       <Breadcrumb pageName="Berita" />
 
       <ShowcaseSection title="Data Berita" className="space-y-4">
-        <div className="flex justify-end">
-          <Link href={"/dashboard/cms/news/add"}>
-            <Button
-              size={"small"}
-              variant={"primary"}
-              shape={"rounded"}
-              label="+ Berita"
-            />
-          </Link>
-        </div>
         <table className="w-full overflow-hidden rounded-lg border border-gray-300">
           <thead className="bg-gray-100">
             <tr>
@@ -87,7 +56,7 @@ export default async function NewsPage({
               <th className="p-3">Aksi</th>
             </tr>
           </thead>
-          <tbody>
+          {/* <tbody>
             {news.data.map((news) => (
               <tr key={news.id} className="border-t hover:bg-gray-50">
                 <td className="p-3">{news.title}</td>
@@ -104,13 +73,12 @@ export default async function NewsPage({
                   {new Date(news.updated_at).toLocaleDateString()}
                 </td>
                 <td className="flex justify-center gap-2 p-3">
-                  <Link
-                    href={`/dashboard/cms/news/${news.slug}`}
-                    className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
-                  >
-                    Detail
-                  </Link>
-                  <DeleteButton id={news.id} deleteAction={deleteNews} />
+                  <button className="rounded bg-yellow-500 px-3 py-1 text-white hover:bg-yellow-600">
+                    Edit
+                  </button>
+                  <button className="rounded bg-red-600 px-3 py-1 text-white hover:bg-red-700">
+                    Hapus
+                  </button>
                 </td>
               </tr>
             ))}
@@ -121,9 +89,11 @@ export default async function NewsPage({
                 </td>
               </tr>
             )}
-          </tbody>
+          </tbody> */}
         </table>
       </ShowcaseSection>
     </>
   );
 }
+
+export default AddNewsPage;
