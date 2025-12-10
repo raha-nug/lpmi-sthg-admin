@@ -20,17 +20,10 @@ export const NAV_DATA = [
             url: "/dashboard/cms/news",
           },
           {
-            title: "Dokumen Persyaratan",
-            url: "/dashboard/calon-mahasiswa/forms/dokumen-persyaratan",
+            title: "Galeri",
+            url: "/dashboard/cms/galeri",
           },
-          {
-            title: "Aplikasi Beasiswa",
-            url: "/dashboard/calon-mahasiswa/forms/aplikasi-beasiswa",
-          },
-          {
-            title: "Daftar Ulang",
-            url: "/dashboard/calon-mahasiswa/forms/daftar-ulang",
-          },
+          
         ],
       },
       {
