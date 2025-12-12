@@ -4,14 +4,16 @@ import Swal from "sweetalert2";
 
 export default function DeleteButton({
   id,
+  path,
   deleteAction,
 }: {
   id: string;
-  deleteAction: (id: string) => void;
+  path: string;
+  deleteAction: (id: string, path:string) => void;
 }) {
   const handleDelete = async () => {
     const confirm = await Swal.fire({
-      title: "Hapus berita?",
+      title: "Hapus data?",
       text: "Tindakan ini tidak dapat dibatalkan.",
       icon: "warning",
       showCancelButton: true,
@@ -21,7 +23,7 @@ export default function DeleteButton({
 
     if (!confirm.isConfirmed) return;
 
-    await deleteAction(id); // <- memanggil server action
+    await deleteAction(id, path); // <- memanggil server action
   };
 
   return (

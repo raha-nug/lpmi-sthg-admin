@@ -4,44 +4,11 @@ import { Button } from "@/components/ui-elements/button";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import DeleteButton from "./DeleteButton";
-import { deleteGaleri } from "./actions";
+import DeleteButton from "@/components/DeleteButton";
+import { deleteFunc } from "@/utils/DeleteActions";
+import { getGaleri } from "./actions";
 
-interface GaleriItem {
-  id: string;
-  title: string;
-  image: string;
-  description: string;
-  event_date: string;
-}
 
-interface galeriResponse {
-  first_page_url: string;
-  last_page_url: string;
-  current_page: number;
-  data: GaleriItem[];
-  last_page: number;
-}
-
-const cookieStore = cookies();
-const token = (await cookieStore).get("accessToken")?.value ?? "";
-console.log(token)
-async function getGaleri(page: number = 1): Promise<galeriResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL}/api/cms/listGaleri?page=${page}`,
-    {
-      headers: {
-        accept: "application/json",
-        Authorization: token,
-      },
-      cache: "no-store", // biar selalu fresh (SSR)
-    },
-  );
-
-  const data = await res.json();
-
-  return data;
-}
 
 export default async function GaleriPage({
   searchParams,
@@ -99,14 +66,14 @@ export default async function GaleriPage({
                   >
                     Detail
                   </Link>
-                  <DeleteButton id={galeri.id} deleteAction={deleteGaleri} />
+                  <DeleteButton id={galeri.id} deleteAction={deleteFunc} path="Galeri" />
                 </td>
               </tr>
             ))}
             {galeri.data.length === 0 && (
               <tr>
                 <td colSpan={8} className="p-4 text-center text-gray-500">
-                  Belum ada data berita
+                  Belum ada data
                 </td>
               </tr>
             )}

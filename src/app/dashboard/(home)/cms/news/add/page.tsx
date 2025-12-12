@@ -6,46 +6,7 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-
-export async function addNews(formData: FormData): Promise<void> {
-  try {
-    const title = formData.get("title");
-    const type = formData.get("type");
-    const content = formData.get("content");
-    const image = formData.get("image");
-
-    if (!title || !type || !content) {
-      throw new Error("Semua field wajib diisi.");
-    }
-
-    if (!(image instanceof File)) {
-      throw new Error("File gambar tidak valid.");
-    }
-
-    const token = (await cookies()).get("accessToken")?.value ?? "";
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL}/api/cms/createNews`,
-      {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: token,
-        },
-      },
-    );
-
-    revalidatePath("/dashboard/cms/news");
-    redirect("/dashboard/cms/news");
-  } catch (err: any) {
-    // Jangan blok redirect
-    if (err.digest?.startsWith("NEXT_REDIRECT")) throw err;
-
-    throw new Error(err.message || "Terjadi kesalahan.");
-  }
-}
+import { addNews } from "../actions";
 
 async function AddNewsPage() {
   return (
@@ -58,19 +19,24 @@ async function AddNewsPage() {
             type="text"
             name="title"
             placeholder="Judul"
+            required
           />
           <InputGroup
             label="Type"
+            className="hidden"
             type="text"
             name="type"
+            defaultValue="berita"
             placeholder="Berita"
+            required
           />
-          <InputGroup label="Gambar" type="file" name="image" />
+          <InputGroup label="Gambar" type="file" name="image" required />
 
           <TextAreaGroup
             label="Konten"
             name="content"
             placeholder="Masukan konten.."
+            required
           />
 
           <div className="flex justify-end">

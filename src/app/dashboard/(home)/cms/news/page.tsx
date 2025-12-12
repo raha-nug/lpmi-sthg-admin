@@ -4,8 +4,8 @@ import { Button } from "@/components/ui-elements/button";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import DeleteButton from "./DeleteButton";
-import { deleteNews } from "./actions";
+import DeleteButton from "@/components/DeleteButton";
+import { deleteFunc } from "@/utils/DeleteActions";
 
 interface NewsItem {
   id: string;
@@ -29,7 +29,6 @@ interface NewsResponse {
 
 const cookieStore = cookies();
 const token = (await cookieStore).get("accessToken")?.value ?? "";
-console.log(token)
 async function getNews(page: number = 1): Promise<NewsResponse> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL}/api/cms/listNews?page=${page}`,
@@ -110,14 +109,14 @@ export default async function NewsPage({
                   >
                     Detail
                   </Link>
-                  <DeleteButton id={news.id} deleteAction={deleteNews} />
+                  <DeleteButton id={news.id} deleteAction={deleteFunc} path="News" />
                 </td>
               </tr>
             ))}
             {news.data.length === 0 && (
               <tr>
                 <td colSpan={8} className="p-4 text-center text-gray-500">
-                  Belum ada data berita
+                  Belum ada data
                 </td>
               </tr>
             )}

@@ -1,5 +1,8 @@
+"use client"
+
 import { cn } from "@/lib/utils";
 import { type HTMLInputTypeAttribute, useId } from "react";
+import Swal from "sweetalert2";
 
 type InputGroupProps = {
   className?: string;
@@ -56,7 +59,28 @@ const InputGroup: React.FC<InputGroupProps> = ({
           type={type}
           name={props.name}
           placeholder={placeholder}
-          onChange={handleChange}
+          onChange={(e) => {
+            // Validasi ukuran file
+            if (type === "file") {
+              const file = e.target.files?.[0];
+              if (file) {
+                const maxSize = 1024 * 1024;
+
+                if (file.size > maxSize) {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Ukuran file terlalu besar",
+                    text: `Ukuran maksimal adalah 1MB`,
+                  });
+
+                  e.target.value = ""; // reset input
+                  return;
+                }
+              }
+            }
+
+            handleChange?.(e);
+          }}
           value={props.value}
           defaultValue={props.defaultValue}
           className={cn(
