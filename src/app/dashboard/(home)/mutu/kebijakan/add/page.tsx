@@ -6,29 +6,28 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
-import { addGaleri } from "../actions";
+import { addKebijakanMutu } from "../actions";
 
-async function AddGaleriPage() {
+async function AddKebijakanMutuPage() {
   return (
     <>
-      <Breadcrumb pageName="Tambahkan Galeri" />
-      <ShowcaseSection title="Form Galeri">
-        <form action={addGaleri} className="space-y-3">
+      <Breadcrumb pageName="Tambahkan Kebijakan Mutu" />
+      <ShowcaseSection title="Form Kebijakan Mutu">
+        <form action={addKebijakanMutu} className="space-y-3">
           <InputGroup
             required
-            label="Judul"
+            label="Subject"
             type="text"
-            name="title"
-            placeholder="Judul"
+            name="subject"
+            placeholder="Subject"
           />
           <InputGroup
             required
-            label="Tanggal"
-            type="date"
-            name="event_date"
-            placeholder="Tanggal"
+            label="Link Doc"
+            type="text"
+            name="link_doc"
+            placeholder="Link Doc"
           />
-          <InputGroup label="Gambar" type="file" name="image" required />
 
           <TextAreaGroup
             label="Deskripsi"
@@ -46,4 +45,4 @@ async function AddGaleriPage() {
   );
 }
 
-export default AddGaleriPage;
+export default AddKebijakanMutuPage;

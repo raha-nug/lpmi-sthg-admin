@@ -39,17 +39,18 @@ export const NAV_DATA = [
         ],
       },
       {
-        title: "Seleksi",
-        icon: Icons.Alphabet,
-        url: "/dashboard/calon-mahasiswa/seleksi",
-        items: [],
+        title: "Mutu",
+        icon: Icons.FourCircle,
+        items: [
+          {
+            title: "Kebijakan",
+            url: "/dashboard/mutu/kebijakan",
+          },
+          
+          
+        ],
       },
-      {
-        title: "Pengumuman",
-        icon: Icons.Table,
-        url: "/dashboard/calon-mahasiswa/pengumuman",
-        items: [],
-      },
+      
     ],
   },
 

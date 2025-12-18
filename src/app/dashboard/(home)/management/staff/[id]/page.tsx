@@ -11,6 +11,7 @@ import { addGaleri, getGaleriById } from "../actions";
 async function DetailGaleriPage({ params }: { params: { id: string } }) {
   const { id } = await params;
   const galeri = await getGaleriById(id);
+  console.log("ID DI PAGE",id)
 
   return (
     <>
@@ -53,7 +54,7 @@ async function DetailGaleriPage({ params }: { params: { id: string } }) {
           />
 
           <div className="flex justify-end">
-            <Button label="Simpan" shape={"rounded"} type="submit" />
+            <Button label="Luncurkan" shape={"rounded"} type="submit" />
           </div>
         </form>
       </ShowcaseSection>

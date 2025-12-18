@@ -23,5 +23,7 @@ export async function deleteFunc(id: string, path:string, folder:string) {
     throw new Error(data.message || "Gagal menghapus data");
   }
 
-  redirect(`/dashboard/${folder}/${path.toLocaleLowerCase()}`);
+  const cleanPath = path.replace(/mutu/gi, "").toLowerCase();
+
+  redirect(`/dashboard/${folder}/${cleanPath}`);
 }

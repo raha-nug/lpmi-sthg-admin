@@ -6,34 +6,34 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
-import { addGaleri } from "../actions";
+import { addStaff } from "../actions";
 
-async function AddGaleriPage() {
+async function AddStaffPage() {
   return (
     <>
-      <Breadcrumb pageName="Tambahkan Galeri" />
-      <ShowcaseSection title="Form Galeri">
-        <form action={addGaleri} className="space-y-3">
+      <Breadcrumb pageName="Tambahkan berita" />
+      <ShowcaseSection title="Form berita">
+        <form action={addStaff} className="space-y-3">
           <InputGroup
             required
-            label="Judul"
+            label="Nama"
             type="text"
-            name="title"
-            placeholder="Judul"
+            name="name"
+            placeholder="Nama"
           />
           <InputGroup
             required
-            label="Tanggal"
-            type="date"
-            name="event_date"
-            placeholder="Tanggal"
+            label="Posisi"
+            type="text"
+            name="position"
+            placeholder="Posisi"
           />
-          <InputGroup label="Gambar" type="file" name="image" required />
+          <InputGroup label="Foto" type="file" name="photo" required />
 
           <TextAreaGroup
-            label="Deskripsi"
-            name="description"
-            placeholder="Masukan deskripsi.."
+            label="Bio"
+            name="bio"
+            placeholder="Masukan Bio.."
             required
           />
 
@@ -46,4 +46,4 @@ async function AddGaleriPage() {
   );
 }
 
-export default AddGaleriPage;
+export default AddStaffPage;

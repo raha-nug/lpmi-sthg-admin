@@ -6,49 +6,48 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
-import { addGaleri, getGaleriById } from "../actions";
+import { addKebijakanMutu, getDetailKebijakanMutuById } from "../actions";
 
-async function DetailGaleriPage({ params }: { params: { id: string } }) {
+async function DetailKebijakanMutuPage({ params }: { params: { id: string } }) {
   const { id } = await params;
-  const galeri = await getGaleriById(id);
+  const kebijakan = await getDetailKebijakanMutuById(id);
 
   return (
     <>
       <Breadcrumb pageName="Edit Galeri" />
       <ShowcaseSection title="Form galeri">
-        <form action={addGaleri} className="space-y-3">
+        <form action={addKebijakanMutu} className="space-y-3">
           <InputGroup
             className="hidden"
             label="Id"
             type="text"
             required
-            defaultValue={galeri.id}
+            defaultValue={kebijakan?.id}
             name="id"
             placeholder="Id"
           />
           <InputGroup
-            label="Judul"
+            label="Subject"
             type="text"
             required
-            defaultValue={galeri.title}
-            name="title"
-            placeholder="Judul"
+            defaultValue={kebijakan?.subject}
+            name="subject"
+            placeholder="Subject"
           />
           <InputGroup
-            label="Type"
-            type="date"
+            label="Link Doc"
+            type="text"
             required
-            defaultValue={galeri.event_date}
-            name="event_date"
-            placeholder="Galeri"
+            defaultValue={kebijakan?.link_doc}
+            name="link_doc"
+            placeholder="Link Doc"
           />
-          <InputGroup label="Gambar" type="file" name="image" required/>
 
           <TextAreaGroup
-            label="Konten"
+            label="Deskripsi"
             name="description"
-            defaultValue={galeri.description}
-            placeholder="Masukan konten.."
+            defaultValue={kebijakan.description}
+            placeholder="Masukan deskripsi.."
             required
           />
 
@@ -61,4 +60,4 @@ async function DetailGaleriPage({ params }: { params: { id: string } }) {
   );
 }
 
-export default DetailGaleriPage;
+export default DetailKebijakanMutuPage;
