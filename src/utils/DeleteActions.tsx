@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function deleteFunc(id: string, path:string) {
+export async function deleteFunc(id: string, path:string, folder:string) {
   const cookieStore = cookies();
   const token = (await cookieStore).get("accessToken")?.value ?? "";
 
@@ -23,5 +23,5 @@ export async function deleteFunc(id: string, path:string) {
     throw new Error(data.message || "Gagal menghapus data");
   }
 
-  redirect(`/dashboard/cms/${path.toLocaleLowerCase()}`);
+  redirect(`/dashboard/${folder}/${path.toLocaleLowerCase()}`);
 }

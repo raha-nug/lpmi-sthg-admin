@@ -5,11 +5,13 @@ import Swal from "sweetalert2";
 export default function DeleteButton({
   id,
   path,
+  folder,
   deleteAction,
 }: {
   id: string;
   path: string;
-  deleteAction: (id: string, path:string) => void;
+  folder: string;
+  deleteAction: (id: string, path:string, folder:string) => void;
 }) {
   const handleDelete = async () => {
     const confirm = await Swal.fire({
@@ -23,7 +25,7 @@ export default function DeleteButton({
 
     if (!confirm.isConfirmed) return;
 
-    await deleteAction(id, path); // <- memanggil server action
+    await deleteAction(id, path, folder); // <- memanggil server action
   };
 
   return (

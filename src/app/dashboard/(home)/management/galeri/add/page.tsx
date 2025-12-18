@@ -38,7 +38,7 @@ async function AddGaleriPage() {
           />
 
           <div className="flex justify-end">
-            <Button label="Luncurkan" shape={"rounded"} type="submit" />
+            <Button label="Simpan" shape={"rounded"} type="submit" />
           </div>
         </form>
       </ShowcaseSection>

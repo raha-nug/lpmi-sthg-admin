@@ -77,8 +77,8 @@ export async function addGaleri(formData: FormData): Promise<void> {
       },
     );
 
-    revalidatePath("/dashboard/cms/galeri");
-    redirect("/dashboard/cms/galeri");
+    revalidatePath("/dashboard/management/galeri");
+    redirect("/dashboard/management/galeri");
   } catch (err: any) {
     // Jangan blok redirect
     if (err.digest?.startsWith("NEXT_REDIRECT")) throw err;

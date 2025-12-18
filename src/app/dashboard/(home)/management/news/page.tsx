@@ -1,50 +1,13 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteFunc } from "@/utils/DeleteActions";
+import { getNews } from "./actions";
 
-interface NewsItem {
-  id: string;
-  title: string;
-  type: string;
-  content: string;
-  image: string;
-  slug: string;
-  created_by: string;
-  created_at: string;
-  updated_at: string;
-}
 
-interface NewsResponse {
-  first_page_url: string;
-  last_page_url: string;
-  current_page: number;
-  data: NewsItem[];
-  last_page: number;
-}
-
-const cookieStore = cookies();
-const token = (await cookieStore).get("accessToken")?.value ?? "";
-async function getNews(page: number = 1): Promise<NewsResponse> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_SERVICE_URL}/api/cms/listNews?page=${page}`,
-    {
-      headers: {
-        accept: "application/json",
-        Authorization: token,
-      },
-      cache: "no-store", // biar selalu fresh (SSR)
-    },
-  );
-
-  const data = await res.json();
-
-  return data;
-}
 
 export default async function NewsPage({
   searchParams,
@@ -54,7 +17,7 @@ export default async function NewsPage({
   const params = await searchParams;
   const page = Number(params?.page ?? 1);
   if (!params?.page) {
-    redirect(`/dashboard/cms/news?page=${page}`);
+    redirect(`/dashboard/management/news?page=${page}`);
   }
   const news = await getNews(page);
 
@@ -64,7 +27,7 @@ export default async function NewsPage({
 
       <ShowcaseSection title="Data Berita" className="space-y-4">
         <div className="flex justify-end">
-          <Link href={"/dashboard/cms/news/add"}>
+          <Link href={"/dashboard/management/news/add"}>
             <Button
               size={"small"}
               variant={"primary"}
@@ -104,12 +67,12 @@ export default async function NewsPage({
                 </td>
                 <td className="flex justify-center gap-2 p-3">
                   <Link
-                    href={`/dashboard/cms/news/${news.slug}`}
+                    href={`/dashboard/management/news/${news.slug}`}
                     className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
                   >
                     Detail
                   </Link>
-                  <DeleteButton id={news.id} deleteAction={deleteFunc} path="News" />
+                  <DeleteButton id={news.id} deleteAction={deleteFunc} path="News" folder="management"/>
                 </td>
               </tr>
             ))}

@@ -1,7 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
-import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import DeleteButton from "@/components/DeleteButton";
@@ -18,7 +17,7 @@ export default async function GaleriPage({
   const params = await searchParams;
   const page = Number(params?.page ?? 1);
   if (!params?.page) {
-    redirect(`/dashboard/cms/galeri?page=${page}`);
+    redirect(`/dashboard/management/galeri?page=${page}`);
   }
   const galeri = await getGaleri(page);
 
@@ -28,7 +27,7 @@ export default async function GaleriPage({
 
       <ShowcaseSection title="Data Galeri" className="space-y-4">
         <div className="flex justify-end">
-          <Link href={"/dashboard/cms/galeri/add"}>
+          <Link href={"/dashboard/management/galeri/add"}>
             <Button
               size={"small"}
               variant={"primary"}
@@ -61,12 +60,12 @@ export default async function GaleriPage({
                 
                 <td className="flex justify-center gap-2 p-3">
                   <Link
-                    href={`/dashboard/cms/galeri/${galeri.id}`}
+                    href={`/dashboard/management/galeri/${galeri.id}`}
                     className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
                   >
                     Detail
                   </Link>
-                  <DeleteButton id={galeri.id} deleteAction={deleteFunc} path="Galeri" />
+                  <DeleteButton id={galeri.id} deleteAction={deleteFunc} path="Galeri" folder="management" />
                 </td>
               </tr>
             ))}

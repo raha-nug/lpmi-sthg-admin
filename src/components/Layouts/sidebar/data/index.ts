@@ -12,16 +12,28 @@ export const NAV_DATA = [
       },
 
       {
-        title: "CMS",
+        title: "Management",
         icon: Icons.FourCircle,
         items: [
           {
             title: "Berita",
-            url: "/dashboard/cms/news",
+            url: "/dashboard/management/news",
           },
           {
             title: "Galeri",
-            url: "/dashboard/cms/galeri",
+            url: "/dashboard/management/galeri",
+          },
+          {
+            title: "Kontak",
+            url: "/dashboard/management/kontak",
+          },
+          {
+            title: "Profil",
+            url: "/dashboard/management/profil",
+          },
+          {
+            title: "Staff",
+            url: "/dashboard/management/staff",
           },
           
         ],
