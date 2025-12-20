@@ -50,6 +50,14 @@ export const NAV_DATA = [
             title: "Standar",
             url: "/dashboard/mutu/standar",
           },
+          {
+            title: "Manual",
+            url: "/dashboard/mutu/manual",
+          },
+          {
+            title: "Formulir",
+            url: "/dashboard/mutu/formulir",
+          },
           
           
         ],
