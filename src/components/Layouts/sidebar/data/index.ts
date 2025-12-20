@@ -46,6 +46,10 @@ export const NAV_DATA = [
             title: "Kebijakan",
             url: "/dashboard/mutu/kebijakan",
           },
+          {
+            title: "Standar",
+            url: "/dashboard/mutu/standar",
+          },
           
           
         ],

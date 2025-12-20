@@ -14,8 +14,8 @@ async function DetailKebijakanMutuPage({ params }: { params: { id: string } }) {
 
   return (
     <>
-      <Breadcrumb pageName="Edit Galeri" />
-      <ShowcaseSection title="Form galeri">
+      <Breadcrumb pageName="Edit Kebijakan Mutu" />
+      <ShowcaseSection title="Form Kebijakan Mutu">
         <form action={addKebijakanMutu} className="space-y-3">
           <InputGroup
             className="hidden"

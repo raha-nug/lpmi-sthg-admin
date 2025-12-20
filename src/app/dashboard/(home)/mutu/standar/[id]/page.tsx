@@ -6,51 +6,52 @@ import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
-import { addStaff, getStaffById } from "../actions";
+import { addStandarMutu, getDetailStandarMutu } from "../actions";
 
-async function DetailStaff({ params }: { params: { id: string } }) {
+async function DetailKebijakanMutuPage({ params }: { params: { id: string } }) {
   const { id } = await params;
-  const staff = await getStaffById(id);
+  const standar = await getDetailStandarMutu(id);
 
   return (
     <>
-      <Breadcrumb pageName="Edit Staff" />
-      <ShowcaseSection title="Form Staff">
-        <form action={addStaff} className="space-y-3">
+      <Breadcrumb pageName="Edit Standar Mutu" />
+      <ShowcaseSection title="Form Standar Mutu">
+        <form action={addStandarMutu} className="space-y-3">
           <InputGroup
             className="hidden"
             label="Id"
             type="text"
             required
-            defaultValue={staff.id}
+            defaultValue={standar?.id}
             name="id"
             placeholder="Id"
           />
           <InputGroup
-            label="Nama"
+            label="Subject"
             type="text"
             required
-            defaultValue={staff.name}
-            name="name"
-            placeholder="Nama"
+            defaultValue={standar?.subject}
+            name="subject"
+            placeholder="Subject"
           />
           <InputGroup
-            label="Posisi"
+            label="Link Doc"
             type="text"
             required
-            defaultValue={staff.position}
-            name="position"
-            placeholder="Posisi"
+            defaultValue={standar?.link_doc}
+            name="link_doc"
+            placeholder="Link Doc"
           />
-          <InputGroup label="Gambar" type="file" name="photo" required/>
-
-          <TextAreaGroup
-            label="Konten"
-            name="bio"
-            defaultValue={staff.bio}
-            placeholder="Masukan bio.."
+          <InputGroup
+            label="Tahun Dokumen"
+            type="text"
             required
+            defaultValue={standar?.year_doc}
+            name="year_doc"
+            placeholder="Tahun Dokumen"
           />
+
+
 
           <div className="flex justify-end">
             <Button label="Simpan" shape={"rounded"} type="submit" />
@@ -61,4 +62,4 @@ async function DetailStaff({ params }: { params: { id: string } }) {
   );
 }
 
-export default DetailStaff;
+export default DetailKebijakanMutuPage;
