@@ -1,14 +1,13 @@
-"use server";
-
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import InputGroup from "@/components/FormElements/InputGroup";
-import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
 import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addStandarMutu, getDetailStandarMutu } from "../actions";
-
-async function DetailKebijakanMutuPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+async function DetailKebijakanMutuPage({ params }: PageProps) {
   const { id } = await params;
   const standar = await getDetailStandarMutu(id);
 
@@ -50,8 +49,6 @@ async function DetailKebijakanMutuPage({ params }: { params: { id: string } }) {
             name="year_doc"
             placeholder="Tahun Dokumen"
           />
-
-
 
           <div className="flex justify-end">
             <Button label="Simpan" shape={"rounded"} type="submit" />

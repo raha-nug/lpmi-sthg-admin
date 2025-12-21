@@ -7,8 +7,10 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addStaff, getStaffById } from "../actions";
-
-async function DetailStaff({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+async function DetailStaff({ params }: PageProps) {
   const { id } = await params;
   const staff = await getStaffById(id);
 
@@ -42,7 +44,7 @@ async function DetailStaff({ params }: { params: { id: string } }) {
             name="position"
             placeholder="Posisi"
           />
-          <InputGroup label="Gambar" type="file" name="photo" required/>
+          <InputGroup label="Gambar" type="file" name="photo" required />
 
           <TextAreaGroup
             label="Konten"

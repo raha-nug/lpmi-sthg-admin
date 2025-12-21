@@ -7,8 +7,10 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addKebijakanMutu, getDetailKebijakanMutuById } from "../actions";
-
-async function DetailKebijakanMutuPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+async function DetailKebijakanMutuPage({ params }: PageProps) {
   const { id } = await params;
   const kebijakan = await getDetailKebijakanMutuById(id);
 

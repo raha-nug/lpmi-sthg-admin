@@ -7,8 +7,10 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addNews, getNewsBySlug } from "../actions";
-
-async function DetailNewsPage({ params }: { params: { slug: string } }) {
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+async function DetailNewsPage({ params }: PageProps) {
   const { slug } = await params;
   const news = await getNewsBySlug(slug);
   return (

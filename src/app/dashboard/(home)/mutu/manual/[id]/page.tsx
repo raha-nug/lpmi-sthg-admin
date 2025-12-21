@@ -6,8 +6,10 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addManualMutu, getDetailManualMutu } from "../actions";
-
-async function DetailManualMutuPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+async function DetailManualMutuPage({ params }: PageProps) {
   const { id } = await params;
   const manual = await getDetailManualMutu(id);
 

@@ -6,8 +6,10 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addFormulirMutu, getDetailFormulirMutu } from "../actions";
-
-async function DetailFormulirMutuPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+async function DetailFormulirMutuPage({ params }: PageProps) {
   const { id } = await params;
   const formulir = await getDetailFormulirMutu(id);
 

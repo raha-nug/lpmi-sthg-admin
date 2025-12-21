@@ -1,5 +1,3 @@
-"use server";
-
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import InputGroup from "@/components/FormElements/InputGroup";
 import { TextAreaGroup } from "@/components/FormElements/InputGroup/text-area";
@@ -7,8 +5,10 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addGaleri, getGaleriById } from "../actions";
-
-async function DetailGaleriPage({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+async function DetailGaleriPage({ params }: PageProps) {
   const { id } = await params;
   const galeri = await getGaleriById(id);
 
@@ -42,7 +42,7 @@ async function DetailGaleriPage({ params }: { params: { id: string } }) {
             name="event_date"
             placeholder="Galeri"
           />
-          <InputGroup label="Gambar" type="file" name="image" required/>
+          <InputGroup label="Gambar" type="file" name="image" required />
 
           <TextAreaGroup
             label="Konten"
