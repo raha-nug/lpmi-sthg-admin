@@ -7,7 +7,7 @@ export const NAV_DATA = [
       {
         title: "Dashboard",
         icon: Icons.HomeIcon,
-        url: "/dashboard/calon-mahasiswa",
+        url: "/dashboard",
         items: [],
       },
 
@@ -35,7 +35,6 @@ export const NAV_DATA = [
             title: "Staff",
             url: "/dashboard/management/staff",
           },
-          
         ],
       },
       {
@@ -58,15 +57,14 @@ export const NAV_DATA = [
             title: "Formulir",
             url: "/dashboard/mutu/formulir",
           },
-          
-          
         ],
       },
-      
+      {
+        title: "Reset Password",
+        icon: Icons.User,
+        url: "/dashboard/reset-password",
+        items: [],
+      },
     ],
   },
-
 ];
-
-
-
