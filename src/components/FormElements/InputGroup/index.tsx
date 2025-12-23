@@ -64,6 +64,27 @@ const InputGroup: React.FC<InputGroupProps> = ({
             if (type === "file") {
               const file = e.target.files?.[0];
               if (file) {
+                if (!file) return;
+
+                 const allowedTypes = [
+                   "application/pdf",
+                   "image/png",
+                   "image/jpeg",
+                   "image/jpg",
+                   "image/webp",
+                 ];
+
+                 if (!allowedTypes.includes(file.type)) {
+                   Swal.fire({
+                     icon: "error",
+                     title: "Format file tidak didukung",
+                     text: "Hanya PDF atau gambar yang diperbolehkan",
+                   });
+
+                   e.target.value = "";
+                   return;
+                 }
+                 
                 const maxSize = 1024 * 1024;
 
                 if (file.size > maxSize) {

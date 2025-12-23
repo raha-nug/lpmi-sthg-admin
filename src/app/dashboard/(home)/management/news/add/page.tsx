@@ -7,6 +7,7 @@ import { ShowcaseSection } from "@/components/Layouts/showcase-section";
 import { Button } from "@/components/ui-elements/button";
 import React from "react";
 import { addNews } from "../actions";
+import RichTextEditor from "@/components/FormElements/Editor";
 
 async function AddNewsPage() {
   return (
@@ -32,11 +33,10 @@ async function AddNewsPage() {
           />
           <InputGroup label="Gambar" type="file" name="image" required />
 
-          <TextAreaGroup
-            label="Konten"
+          <RichTextEditor
+            label="Konten Berita"
             name="content"
-            placeholder="Masukan konten.."
-            required
+            placeholder="Tulis detail berita di sini..."
           />
 
           <div className="flex justify-end">

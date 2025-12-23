@@ -50,7 +50,7 @@ export default function SignIn() {
                 fields below
               </p>
 
-              <div className="mt-31">
+              <div className="mt-5">
                 <Image
                   src={"/images/grids/grid-02.svg"}
                   alt="Logo"

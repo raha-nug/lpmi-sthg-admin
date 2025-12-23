@@ -19,16 +19,17 @@ export async function POST(req: Request) {
     if (!data.status) {
       return NextResponse.json(
         { status: false, message: data.message ?? "Login gagal" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     const token = data.token;
     const role = data.role;
 
-    const response = NextResponse.json(
-      { success: true, message: "Login berhasil" }
-    );
+    const response = NextResponse.json({
+      success: true,
+      message: "Login berhasil",
+    });
 
     // set cookie token
     response.cookies.set("accessToken", token, {
@@ -36,7 +37,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60,
+      maxAge: 60 * 60 * 24,
     });
 
     response.cookies.set("role", role, {
@@ -44,7 +45,7 @@ export async function POST(req: Request) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60,
+      maxAge: 60 * 60 * 24,
     });
 
     return response;
@@ -57,7 +58,7 @@ export async function POST(req: Request) {
         message: "Internal server error",
         error: error.message ?? "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
