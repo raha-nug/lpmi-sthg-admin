@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteFunc } from "@/utils/DeleteActions";
 import { getKebijakanMutu } from "./actions";
+import Pagination from "@/components/ui-elements/Pagination";
 
 export default async function KebijakanMutuPage({
   searchParams,
@@ -34,51 +35,66 @@ export default async function KebijakanMutuPage({
             />
           </Link>
         </div>
-        <table className="w-full overflow-hidden rounded-lg border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 text-left">Subject</th>
-              <th className="p-3 text-left">Deskripsi</th>
-              <th className="p-3 text-left">Link Doc</th>
-              <th className="p-3">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {kebijakan.data.map((kebijakan) => (
-              <tr key={kebijakan.id} className="border-t hover:bg-gray-50">
-                <td className="p-3">{kebijakan.subject}</td>
-                <td className="p-3">
-                  <Link className="text-blue-500 underline" href={kebijakan.link_doc}>
-                    View Doc
-                  </Link>
-                </td>
-                <td className="max-w-xs truncate p-3">{kebijakan.description}</td>
-
-                <td className="flex justify-center gap-2 p-3">
-                  <Link
-                    href={`/dashboard/mutu/kebijakan/${kebijakan.id}`}
-                    className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
-                  >
-                    Detail
-                  </Link>
-                  <DeleteButton
-                    id={kebijakan.id}
-                    deleteAction={deleteFunc}
-                    path="KebijakanMutu"
-                    folder="mutu"
-                  />
-                </td>
-              </tr>
-            ))}
-            {kebijakan.data.length === 0 && (
+        <div className="overflow-x-auto">
+          <table className="w-full overflow-hidden rounded-lg border border-gray-300">
+            <thead className="bg-gray-100">
               <tr>
-                <td colSpan={8} className="p-4 text-center text-gray-500">
-                  Belum ada data
-                </td>
+                <th className="p-3 text-left">Subject</th>
+                <th className="p-3 text-left">Deskripsi</th>
+                <th className="p-3 text-left">Link Doc</th>
+                <th className="p-3">Aksi</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {kebijakan.data.map((kebijakan) => (
+                <tr key={kebijakan.id} className="border-t hover:bg-gray-50">
+                  <td className="p-3">{kebijakan.subject}</td>
+                  <td className="p-3">
+                    <Link
+                      className="text-blue-500 underline"
+                      href={kebijakan.link_doc}
+                    >
+                      View Doc
+                    </Link>
+                  </td>
+                  <td className="max-w-xs truncate p-3">
+                    {kebijakan.description}
+                  </td>
+
+                  <td className="flex justify-center gap-2 p-3">
+                    <Link
+                      href={`/dashboard/mutu/kebijakan/${kebijakan.id}`}
+                      className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
+                    >
+                      Detail
+                    </Link>
+                    <DeleteButton
+                      id={kebijakan.id}
+                      deleteAction={deleteFunc}
+                      path="KebijakanMutu"
+                      folder="mutu"
+                    />
+                  </td>
+                </tr>
+              ))}
+              {kebijakan.data.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="p-4 text-center text-gray-500">
+                    Belum ada data
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {kebijakan.data.length > 0 && (
+          <Pagination
+            currentPage={kebijakan.current_page}
+            lastPage={kebijakan.last_page}
+            path="/dashboard/mutu/kebijakan"
+          />
+        )}
       </ShowcaseSection>
     </>
   );

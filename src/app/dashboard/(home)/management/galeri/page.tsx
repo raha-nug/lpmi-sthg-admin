@@ -6,8 +6,7 @@ import { redirect } from "next/navigation";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteFunc } from "@/utils/DeleteActions";
 import { getGaleri } from "./actions";
-
-
+import Pagination from "@/components/ui-elements/Pagination";
 
 export default async function GaleriPage({
   searchParams,
@@ -36,48 +35,67 @@ export default async function GaleriPage({
             />
           </Link>
         </div>
-        <table className="w-full overflow-hidden rounded-lg border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 text-left">Judul</th>
-              <th className="p-3 text-left">Gambar</th>
-              <th className="p-3 text-left">Deskripsi</th>
-              <th className="p-3 text-left">Tanggal</th>
-              <th className="p-3">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {galeri.data.map((galeri) => (
-              <tr key={galeri.id} className="border-t hover:bg-gray-50">
-                <td className="p-3">{galeri.title}</td>
-                <td className="p-3">
-                  <Link className="text-blue-500 underline" href={galeri.image}>
-                    View Image
-                  </Link>
-                </td>
-                <td className="max-w-xs truncate p-3">{galeri.description}</td>
-                <td className="p-3">{galeri.event_date}</td>
-                
-                <td className="flex justify-center gap-2 p-3">
-                  <Link
-                    href={`/dashboard/management/galeri/${galeri.id}`}
-                    className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
-                  >
-                    Detail
-                  </Link>
-                  <DeleteButton id={galeri.id} deleteAction={deleteFunc} path="Galeri" folder="management" />
-                </td>
-              </tr>
-            ))}
-            {galeri.data.length === 0 && (
+        <div className="overflow-x-auto">
+          <table className="w-full overflow-hidden rounded-lg border border-gray-300">
+            <thead className="bg-gray-100">
               <tr>
-                <td colSpan={8} className="p-4 text-center text-gray-500">
-                  Belum ada data
-                </td>
+                <th className="p-3 text-left">Judul</th>
+                <th className="p-3 text-left">Gambar</th>
+                <th className="p-3 text-left">Deskripsi</th>
+                <th className="p-3 text-left">Tanggal</th>
+                <th className="p-3">Aksi</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {galeri.data.map((galeri) => (
+                <tr key={galeri.id} className="border-t hover:bg-gray-50">
+                  <td className="p-3">{galeri.title}</td>
+                  <td className="p-3">
+                    <Link
+                      className="text-blue-500 underline"
+                      href={galeri.image}
+                    >
+                      View Image
+                    </Link>
+                  </td>
+                  <td className="max-w-xs truncate p-3">
+                    {galeri.description}
+                  </td>
+                  <td className="p-3">{galeri.event_date}</td>
+
+                  <td className="flex justify-center gap-2 p-3">
+                    <Link
+                      href={`/dashboard/management/galeri/${galeri.id}`}
+                      className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
+                    >
+                      Detail
+                    </Link>
+                    <DeleteButton
+                      id={galeri.id}
+                      deleteAction={deleteFunc}
+                      path="Galeri"
+                      folder="management"
+                    />
+                  </td>
+                </tr>
+              ))}
+              {galeri.data.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="p-4 text-center text-gray-500">
+                    Belum ada data
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+          {galeri.data.length > 0 && (
+            <Pagination
+              currentPage={galeri.current_page}
+              lastPage={galeri.last_page}
+              path="/dashboard/management/galeri"
+            />
+          )}
       </ShowcaseSection>
     </>
   );

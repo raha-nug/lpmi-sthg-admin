@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import DeleteButton from "@/components/DeleteButton";
 import { deleteFunc } from "@/utils/DeleteActions";
 import { getManualMutu } from "./actions";
+import Pagination from "@/components/ui-elements/Pagination";
 
 export default async function ManualMutuPage({
   searchParams,
@@ -34,54 +35,64 @@ export default async function ManualMutuPage({
             />
           </Link>
         </div>
-        <table className="w-full overflow-hidden rounded-lg border border-gray-300">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="p-3 text-left">Subject</th>
-              <th className="p-3 text-left">Link Doc</th>
-              <th className="p-3 text-left">Year Doc</th>
-              <th className="p-3">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-            {manual.data.map((manual) => (
-              <tr key={manual.id} className="border-t hover:bg-gray-50">
-                <td className="p-3">{manual.subject}</td>
-                <td className="p-3">
-                  <Link
-                    className="text-blue-500 underline"
-                    href={manual.link_doc}
-                  >
-                    View Doc
-                  </Link>
-                </td>
-                <td className="p-3">{manual.year_doc}</td>
-
-                <td className="flex justify-center gap-2 p-3">
-                  <Link
-                    href={`/dashboard/mutu/manual/${manual.id}`}
-                    className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
-                  >
-                    Detail
-                  </Link>
-                  <DeleteButton
-                    id={manual.id}
-                    deleteAction={deleteFunc}
-                    path="ManualMutu"
-                    folder="mutu"
-                  />
-                </td>
-              </tr>
-            ))}
-            {manual.data.length === 0 && (
+        <div className="overflow-x-auto">
+          <table className="w-full overflow-hidden rounded-lg border border-gray-300">
+            <thead className="bg-gray-100">
               <tr>
-                <td colSpan={8} className="p-4 text-center text-gray-500">
-                  Belum ada data
-                </td>
+                <th className="p-3 text-left">Subject</th>
+                <th className="p-3 text-left">Link Doc</th>
+                <th className="p-3 text-left">Year Doc</th>
+                <th className="p-3">Aksi</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {manual.data.map((manual) => (
+                <tr key={manual.id} className="border-t hover:bg-gray-50">
+                  <td className="p-3">{manual.subject}</td>
+                  <td className="p-3">
+                    <Link
+                      className="text-blue-500 underline"
+                      href={manual.link_doc}
+                    >
+                      View Doc
+                    </Link>
+                  </td>
+                  <td className="p-3">{manual.year_doc}</td>
+
+                  <td className="flex justify-center gap-2 p-3">
+                    <Link
+                      href={`/dashboard/mutu/manual/${manual.id}`}
+                      className="rounded bg-blue-500 px-3 py-1 text-white hover:bg-blue-600"
+                    >
+                      Detail
+                    </Link>
+                    <DeleteButton
+                      id={manual.id}
+                      deleteAction={deleteFunc}
+                      path="ManualMutu"
+                      folder="mutu"
+                    />
+                  </td>
+                </tr>
+              ))}
+              {manual.data.length === 0 && (
+                <tr>
+                  <td colSpan={8} className="p-4 text-center text-gray-500">
+                    Belum ada data
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        {manual.data.length > 0 && (
+          <Pagination
+            currentPage={manual.current_page}
+            lastPage={manual.last_page}
+            path="/dashboard/mutu/manual"
+          />
+        )}
       </ShowcaseSection>
     </>
   );

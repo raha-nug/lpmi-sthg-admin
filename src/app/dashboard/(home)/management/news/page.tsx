@@ -7,14 +7,16 @@ import DeleteButton from "@/components/DeleteButton";
 import { deleteFunc } from "@/utils/DeleteActions";
 import { getNews } from "./actions";
 import Pagination from "@/components/ui-elements/Pagination";
+import SearchInput from "@/components/FormElements/SearchInput";
 
 export default async function NewsPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ page?: string }>;
+  searchParams?: Promise<{ page?: string; query?: string }>;
 }) {
   const params = await searchParams;
   const page = Number(params?.page ?? 1);
+  const query = params?.query ?? "";
   if (!params?.page) {
     redirect(`/dashboard/management/news?page=${page}`);
   }
@@ -26,6 +28,11 @@ export default async function NewsPage({
 
       <ShowcaseSection title="Data Berita" className="space-y-4">
         <div className="flex justify-end">
+          {/* Tambahkan Input Search */}
+          {/* <div className="w-full md:w-1/2">
+            <SearchInput placeholder="Cari judul berita..." />
+          </div> */}
+
           <Link href={"/dashboard/management/news/add"}>
             <Button
               size={"small"}
@@ -53,7 +60,11 @@ export default async function NewsPage({
               {news.data.map((news) => (
                 <tr key={news.id} className="border-t hover:bg-gray-50">
                   <td className="p-3">{news.title}</td>
-                  <td className="max-w-xs truncate p-3">{news.content}</td>
+                  <td className="max-w-xs truncate p-3">
+                    <div
+                      dangerouslySetInnerHTML={{ __html: news.content }}
+                    ></div>
+                  </td>
                   <td className="max-w-xs truncate p-3">{news.slug}</td>
                   <td className="p-3">
                     <Link className="text-blue-500 underline" href={news.image}>
@@ -83,8 +94,10 @@ export default async function NewsPage({
               ))}
               {news.data.length === 0 && (
                 <tr>
-                  <td colSpan={8} className="p-4 text-center text-gray-500">
-                    Belum ada data
+                  <td colSpan={8} className="p-10 text-center text-gray-400">
+                    {query
+                      ? `Tidak ada hasil untuk "${query}"`
+                      : "Belum ada data berita."}
                   </td>
                 </tr>
               )}
