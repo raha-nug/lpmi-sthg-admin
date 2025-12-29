@@ -1,5 +1,6 @@
 import { cva, VariantProps } from "class-variance-authority";
 import type { ButtonHTMLAttributes } from "react";
+import { Loader2 } from "lucide-react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2.5 text-center font-medium hover:bg-opacity-90 font-medium transition focus:outline-none",
@@ -37,6 +38,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
   VariantProps<typeof buttonVariants> & {
     label: string;
     icon?: React.ReactNode;
+    loading?: boolean;
   };
 
 export function Button({
@@ -46,18 +48,21 @@ export function Button({
   shape,
   size,
   className,
+  loading,
   ...props
 }: ButtonProps) {
   return (
     <button
+      disabled={loading || props.disabled}
       className={
         buttonVariants({ variant, shape, size }) +
         (className ? ` ${className}` : "")
       }
       {...props}
     >
-      {label}
-      {icon && <span>{icon}</span>}
+      {loading && <Loader2 className="h-4 w-4 animate-spin" />}
+      {loading ? "Menyimpan..." : label}
+      {!loading && icon && <span>{icon}</span>}
     </button>
   );
 }

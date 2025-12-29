@@ -2,7 +2,6 @@
 
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 interface GaleriItem {
   id: string;
@@ -62,7 +61,7 @@ export async function getGaleriById(id: string): Promise<GaleriDetail> {
   return data.data;
 }
 
-export async function addGaleri(formData: FormData): Promise<void> {
+export async function addGaleri(formData: FormData) {
   const token = (await cookies()).get("accessToken")?.value ?? "";
 
   try {
@@ -77,12 +76,20 @@ export async function addGaleri(formData: FormData): Promise<void> {
       },
     );
 
-    revalidatePath("/dashboard/management/galeri");
-    redirect("/dashboard/management/galeri");
-  } catch (err: any) {
-    // Jangan blok redirect
-    if (err.digest?.startsWith("NEXT_REDIRECT")) throw err;
+    const result = await res.json();
 
-    throw new Error(err.message || "Terjadi kesalahan.");
+    if (!res.ok) {
+      return {
+        success: false,
+        message: result.message || "Gagal menyimpan data.",
+      };
+    }
+
+    // Berhasil
+    revalidatePath("/dashboard/management/galeri");
+    return { success: true };
+  } catch (err: any) {
+    console.error("Error addGaleri:", err);
+    return { success: false, message: "Terjadi kesalahan koneksi ke server." };
   }
 }
