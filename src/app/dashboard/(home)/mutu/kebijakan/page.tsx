@@ -40,8 +40,8 @@ export default async function KebijakanMutuPage({
             <thead className="bg-gray-100">
               <tr>
                 <th className="p-3 text-left">Subject</th>
-                <th className="p-3 text-left">Deskripsi</th>
                 <th className="p-3 text-left">Link Doc</th>
+                <th className="p-3 text-left">Deskripsi</th>
                 <th className="p-3">Aksi</th>
               </tr>
             </thead>

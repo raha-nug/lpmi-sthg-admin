@@ -41,7 +41,7 @@ export default async function ManualMutuPage({
               <tr>
                 <th className="p-3 text-left">Subject</th>
                 <th className="p-3 text-left">Link Doc</th>
-                <th className="p-3 text-left">Year Doc</th>
+                <th className="p-3 text-left">Tahun Dokumen</th>
                 <th className="p-3">Aksi</th>
               </tr>
             </thead>
